@@ -3,11 +3,13 @@ import CoffeData from "../data/CoffeData";
 import ThemeSelector from "./ThemeSelector";
 import { ThemeContext } from "../contexts/ThemeContexts";
 import YouTube from "react-youtube";
+import LevelEspresso from "./LevelEspresso";
+import Espresso from "./Epresso";
 export default function Content() {
     const { color, setColor } = useContext(ThemeContext);
 
     const [coffees, setCoffees] = useState([]);
-    const [coffeId, setCoffeId] = useState(null); // Başlangıçta null olabilir veya bir varsayılan ID verebilirsiniz
+    const [coffeId, setCoffeId] = useState(null);
     const [coffeDetails, setCoffeDetail] = useState(null); // Tek bir kahve detayı göstereceğimiz için obje olarak düşünebiliriz
     const [showDetails, setShowDetails] = useState(false);
 
@@ -40,7 +42,8 @@ export default function Content() {
                         <ThemeSelector />
 
                         <h3 className={`text-4xl mb-5  font-bold font-stretch-100% text-orange-950`}>Kahve Demleme Yöntemleri</h3>
-                        <ul className="list flex-wrap  justify-around  gap-x-9 flex w-full h-auto">
+                        <LevelEspresso />
+                        <ul className="list flex-wrap  justify-around  mb-5 gap-x-9 flex w-full h-auto">
                             {coffees.map((coffe) => (
                                 <li
                                     key={coffe.id}
@@ -58,14 +61,14 @@ export default function Content() {
                         </ul>
                         {showDetails && <DetailsCoffeVideo showDetails={showDetails} coffeDetails={coffeDetails} />}
                     </div>
-                    <div className={`flex flex-3/12 ${coffeDetails && "bg-amber-100"}`}>
+                    <div className={`flex flex-3/12 ${coffeDetails && color}`}>
                         <div className="card p-4">
                             {coffeDetails && <COffeDetails onClick={handleDetailsClick} showDetails={showDetails} color={color} coffeDetails={coffeDetails} />} {/* coffeDetails'i prop olarak geçiyoruz */}
                         </div>
                     </div>
 
                 </div>
-                <ContentNext coffeDetails={coffeDetails} />
+                <ContentNext color={color} coffeDetails={coffeDetails} />
             </div>
         </>
     );
@@ -138,13 +141,12 @@ function COffeDetails({ coffeDetails, color, showDetails, onClick }) {
         </div>
     );
 };
-function ContentNext() {
+function ContentNext({ color }) {
     return (
-        <div className="contain-content  pt- h-185  bg-amber-50 flex">
-            <div className="flex w-full mt-5 bg-amber-50 h-max items-center justify-center flex-col">
-                <h2 className="text-amber-950 uppercase text-7xl  font-stretch-ultra-expanded" >Espresso</h2>
-                <div className="card w-3xl h-200 bg-amber-50"></div>
-            </div>
-        </div>
+        <div className="contain-content w-full h-auto flex-row flex flex-wrap bg-amber-50 flex">
+
+            < Espresso color={color} />
+
+        </div >
     );
 }
