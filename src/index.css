@@ -1,0 +1,6 @@
+@import "tailwindcss";
+body{
+  height: 100%;
+  display: flex;
+ transition: all 2s;
+}
